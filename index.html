@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Advanced Registration Form</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-image: url(https://img.freepik.com/free-photo/fitness-concept-with-dumbbells-frame_23-2148531434.jpg?semt=ais_hybrid&w=740);
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      backdrop-filter: blur(4px);
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+      width: 400px;
+      animation: slideIn 0.6s ease-out;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      text-align: center;
+      color: #2c3e50;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      position: relative;
+      margin-bottom: 25px;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 12px 10px;
+      font-size: 16px;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      background: transparent;
+      outline: none;
+    }
+
+    .form-group label {
+      position: absolute;
+      top: 12px;
+      left: 10px;
+      font-size: 14px;
+      color: #666;
+      pointer-events: none;
+      transition: 0.2s ease all;
+    }
+
+    .form-group input:focus ~ label,
+    .form-group input:valid ~ label,
+    .form-group select:focus ~ label,
+    .form-group select:valid ~ label {
+      top: -10px;
+      left: 8px;
+      font-size: 12px;
+      background: #fff;
+      padding: 0 4px;
+      color: #34495e;
+    }
+
+    .gender-select {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      background-color: white;
+    }
+
+    .password-strength {
+      font-size: 12px;
+      margin-top: 5px;
+      color: red;
+    }
+
+    .password-strength.strong {
+      color: green;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .checkbox-group input {
+      margin-right: 10px;
+    }
+
+    .submit-btn {
+      background-color: #2c3e50;
+      color: white;
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .submit-btn:hover {
+      background-color: #1a242f;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Register</h2>
+    <form id="regForm">
+      <div class="form-group">
+        <input type="text" id="fname" name="fname" required />
+        <label for="fname">First Name</label>
+      </div>
+      <div class="form-group">
+        <input type="text" id="lname" name="lname" required />
+        <label for="lname">Last Name</label>
+      </div>
+      <div class="form-group">
+        <input type="email" id="email" name="email" required />
+        <label for="email">Email Address</label>
+      </div>
+      <div class="form-group">
+        <input type="password" id="password" name="password" required />
+        <label for="password">Password</label>
+        <div id="strength" class="password-strength"></div>
+      </div>
+      <div class="form-group">
+        <input type="password" id="confirmPassword" name="confirmPassword" required />
+        <label for="confirmPassword">Confirm Password</label>
+      </div>
+      <div class="form-group">
+        <input type="date" id="dob" name="dob" required />
+        <label for="dob">Date of Birth</label>
+      </div>
+      <div class="form-group">
+        <select name="gender" class="gender-select" required>
+          <option value="" disabled selected hidden>Select Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+        <label for="gender">Gender</label>
+      </div>
+      <div class="checkbox-group">
+        <input type="checkbox" id="terms" required />
+        <label for="terms">I accept the Terms & Conditions</label>
+      </div>
+      <button type="submit" class="submit-btn">Register</button>
+    </form>
+  </div>
+
+  <script>
+    const password = document.getElementById("password");
+    const confirmPassword = document.getElementById("confirmPassword");
+    const strength = document.getElementById("strength");
+    const form = document.getElementById("regForm");
+
+    password.addEventListener("input", () => {
+      const value = password.value;
+      if (value.length < 6) {
+        strength.textContent = "Weak password";
+        strength.classList.remove("strong");
+      } else if (value.match(/[A-Z]/) && value.match(/[0-9]/) && value.length >= 8) {
+        strength.textContent = "Strong password";
+        strength.classList.add("strong");
+      } else {
+        strength.textContent = "Medium password";
+        strength.classList.remove("strong");
+      }
+    });
+
+    form.addEventListener("submit", (e) => {
+      if (password.value !== confirmPassword.value) {
+        e.preventDefault();
+        alert("Passwords do not match!");
+      }
+    });
+  </script>
+</body>
+</html>
